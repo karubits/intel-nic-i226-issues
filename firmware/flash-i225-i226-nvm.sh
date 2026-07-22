@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# flash-i226-v2.sh — Update Intel i225-V / i226-V NVM firmware (portable / auto-detecting)
+# flash-i225-i226-nvm.sh — Update Intel i225-V / i226-V NVM firmware (portable / auto-detecting)
 #
 # A generic version of flash-i226.sh: it DISCOVERS the NICs, their MACs, current
 # firmware (eTrack), and flash size (1MB/2MB) at runtime, then picks the right
@@ -11,9 +11,9 @@
 #   i225-V (DevID 15F3)  ->  target NVM 1.89
 #
 # USAGE
-#   sudo ./flash-i226-v2.sh --dryrun    # detect + print EXACTLY what would run; touch nothing
-#   sudo ./flash-i226-v2.sh --verify    # read-only: show each port's current firmware/eTrack
-#   sudo ./flash-i226-v2.sh             # perform the flash (interactive confirmation)
+#   sudo ./flash-i225-i226-nvm.sh --dryrun    # detect + print EXACTLY what would run; touch nothing
+#   sudo ./flash-i225-i226-nvm.sh --verify    # read-only: show each port's current firmware/eTrack
+#   sudo ./flash-i225-i226-nvm.sh             # perform the flash (interactive confirmation)
 #
 # SAFETY MODEL
 #   * Requires: root; nvmupdate64e present; iomem=relaxed on the kernel cmdline.

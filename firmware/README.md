@@ -1,4 +1,4 @@
-# `flash-i226-v2.sh` — Intel i225-V / i226-V NVM firmware updater
+# `flash-i225-i226-nvm.sh` — Intel i225-V / i226-V NVM firmware updater
 
 A guarded, **auto-detecting** wrapper around Intel's `nvmupdate64e` tool for updating the NVM
 (firmware) on onboard **Intel i225-V / i226-V** 2.5 GbE controllers — the NICs used on
@@ -41,9 +41,9 @@ ASPM-induced hang — for that you also need `pcie_aspm=off` on the kernel comma
 
 ```bash
 # 0) stage nvmupdate64e + the .bin image(s) in this directory (see Requirements)
-sudo ./flash-i226-v2.sh --dryrun    # show exactly what would run — changes nothing
-sudo ./flash-i226-v2.sh --verify    # read-only: current firmware/eTrack per port
-sudo ./flash-i226-v2.sh             # perform the flash (interactive confirmation)
+sudo ./flash-i225-i226-nvm.sh --dryrun    # show exactly what would run — changes nothing
+sudo ./flash-i225-i226-nvm.sh --verify    # read-only: current firmware/eTrack per port
+sudo ./flash-i225-i226-nvm.sh             # perform the flash (interactive confirmation)
 # then: full power-cycle → --verify → remove iomem=relaxed
 ```
 
@@ -97,9 +97,9 @@ Stage the tool and image(s) in this directory (see [Requirements](#requirements)
 
 | Command | What it does |
 |---------|--------------|
-| `sudo ./flash-i226-v2.sh --dryrun` | Prints exactly what would run — **changes nothing**. Always start here. |
-| `sudo ./flash-i226-v2.sh --verify` | Read-only status of each port's current firmware / eTrack. |
-| `sudo ./flash-i226-v2.sh` | Performs the flash. Interactive — prompts for `FLASH-NVM`, and again before the active NIC. Needs physical access + reliable power. |
+| `sudo ./flash-i225-i226-nvm.sh --dryrun` | Prints exactly what would run — **changes nothing**. Always start here. |
+| `sudo ./flash-i225-i226-nvm.sh --verify` | Read-only status of each port's current firmware / eTrack. |
+| `sudo ./flash-i225-i226-nvm.sh` | Performs the flash. Interactive — prompts for `FLASH-NVM`, and again before the active NIC. Needs physical access + reliable power. |
 
 ---
 
@@ -109,7 +109,7 @@ Do these **by hand** — the script never reboots:
 
 1. **Full power-cycle:** `sudo poweroff` → **pull power ~1 minute** → power on.
    A warm reboot does *not* re-enumerate the PCI bus and can leave a NIC dead.
-2. **Verify:** `sudo ./flash-i226-v2.sh --verify` — each port should now show the new eTrack.
+2. **Verify:** `sudo ./flash-i225-i226-nvm.sh --verify` — each port should now show the new eTrack.
 3. **Remove `iomem=relaxed`** from your kernel command line (it relaxes `/dev/mem` hardening) and reboot.
 
 ---
@@ -122,7 +122,7 @@ Do these **by hand** — the script never reboots:
 | `IMG_SEARCH=` | Space-separated dirs to search for `.bin` images | this dir + `/mnt/data/nvm226` |
 
 ```bash
-sudo TOOL=/opt/intel/nvmupdate64e IMG_SEARCH="/opt/fw" ./flash-i226-v2.sh --dryrun
+sudo TOOL=/opt/intel/nvmupdate64e IMG_SEARCH="/opt/fw" ./flash-i225-i226-nvm.sh --dryrun
 ```
 
 ---
