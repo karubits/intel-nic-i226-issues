@@ -27,13 +27,17 @@ README).
 ## What you need
 
 1. **Intel NVM Update Tool (`nvmupdate64e`)** — from the *Intel Ethernet Adapter Complete Driver
-   Pack* (Download Center ID 15084). See [`intel-nic-tools.url`](intel-nic-tools.url).
+   Pack* (Download Center ID 15084):
+   <https://www.intel.com/content/www/us/en/download/15084/intel-ethernet-adapter-complete-driver-pack.html>
    Extract and place `nvmupdate64e` in **this `firmware/` directory** (or point `TOOL=` at it).
-2. **The firmware image(s)** — from the community archive in [`firmware.url`](firmware.url)
-   (`github.com/hunghvu/Intel-I226-V-NVM-Firmware`). You need the `.bin` for **your chip and flash
-   size**, e.g. `FXVL_125C_V_2MB_2.32.bin` (i226-V, 2 MB). Place the `.bin`(s) in this directory, or
-   point `IMG_SEARCH=` at wherever they live. **The script auto-selects the correct one** from the
-   card's detected eTrack, so having both 1 MB and 2 MB present is fine.
+2. **The firmware image(s)** — from the community archive:
+   <https://github.com/hunghvu/Intel-I226-V-NVM-Firmware>
+   You need the `.bin` for **your chip and flash size**. The script auto-selects the correct one from
+   the card's detected eTrack, so having several present is fine. Latest images:
+   - **i226-V:** `FXVL_125C_V_1MB_2.32.bin` / `FXVL_125C_V_2MB_2.32.bin` (NVM 2.32)
+   - **i225-V:** `FXVL_15F3_V_1MB_1.89.bin` / `FXVL_15F3_V_2MB_1.89.bin` (NVM 1.89)
+
+   Place the `.bin`(s) in this directory, or point `IMG_SEARCH=` at wherever they live.
 3. **Linux with `iomem=relaxed`** on the kernel command line. Modern kernels (6.x) block the tool's
    MMIO access and it fails with **exit code 26** otherwise. Add `iomem=relaxed`, reboot, and remove
    it again after flashing.
@@ -117,10 +121,10 @@ Example: `sudo TOOL=/opt/intel/nvmupdate64e IMG_SEARCH="/opt/fw" ./flash-i226-v2
 
 ## Supported hardware
 
-| Chip | PCI Device ID | Target NVM |
-|---|---|---|
-| Intel i226-V | `8086:125C` | 2.32 |
-| Intel i225-V | `8086:15F3` | 1.89 |
+| Chip | PCI Device ID | Target NVM | Image files (1 MB / 2 MB) |
+|---|---|---|---|
+| Intel i226-V | `8086:125C` | 2.32 | `FXVL_125C_V_1MB_2.32.bin` / `FXVL_125C_V_2MB_2.32.bin` |
+| Intel i225-V | `8086:15F3` | 1.89 | `FXVL_15F3_V_1MB_1.89.bin` / `FXVL_15F3_V_2MB_1.89.bin` |
 
 Other variants (i226-LM/IT, i225-LM, etc.) are intentionally **not** handled — flashing the wrong
 family/image (e.g. V firmware onto an LM part) can destroy the controller.
